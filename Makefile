@@ -826,6 +826,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
 
 ifeq ($(ld-name),lld)
 LDFLAGS += -z norelro
+LDFLAGS += -mllvm -regalloc-enable-advisor=release
 endif
 
 KBUILD_CFLAGS += $(call cc-disable-warning, unused-const-variable)
