@@ -746,6 +746,8 @@ endif
 KBUILD_CFLAGS   += -mllvm -regalloc-enable-advisor=release
 # Enable hot cold split optimization
 KBUILD_CFLAGS   += -mllvm -hot-cold-split=true
+# Enable fast FMA optimizations
+KBUILD_CFLAGS   += -ffp-contract=fast
 
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
