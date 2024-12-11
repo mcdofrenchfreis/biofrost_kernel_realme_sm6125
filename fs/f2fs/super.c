@@ -3675,14 +3675,24 @@ try_onemore:
 	/* setup f2fs internal modules */
 	err = f2fs_build_segment_manager(sbi);
 	if (err) {
+<<<<<<< HEAD
 		f2fs_err(sbi, "Failed to initialize F2FS segment manager (%d)",
 			 err);
+=======
+		f2fs_msg(sb, KERN_ERR,
+			"Failed to initialize F2FS segment manager (%d)", err);
+>>>>>>> dece38f300fdfd9feb3842d0e1b7e0795aec0e13
 		goto free_sm;
 	}
 	err = f2fs_build_node_manager(sbi);
 	if (err) {
+<<<<<<< HEAD
 		f2fs_err(sbi, "Failed to initialize F2FS node manager (%d)",
 			 err);
+=======
+		f2fs_msg(sb, KERN_ERR,
+			"Failed to initialize F2FS node manager (%d)", err);
+>>>>>>> dece38f300fdfd9feb3842d0e1b7e0795aec0e13
 		goto free_nm;
 	}
 
