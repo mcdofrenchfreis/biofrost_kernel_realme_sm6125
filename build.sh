@@ -12,7 +12,7 @@ git clone --depth=1 https://github.com/mcdofrenchfreis/AnyKernel3.git -b r5x Any
 # Main Variables
 DATE=$(TZ=Asia/Singapore date +"%a %b %d %r %Z %Y")
 BUILD_START=$(date +"%s")
-TCDIR=/home/biofrost/Development/Compiler/AndroidClang
+TCDIR=/home/biofrost/Development/Compiler/clang-r536225
 DTBO=out/arch/arm64/boot/dtbo.img
 IMAGE=out/arch/arm64/boot/Image.gz-dtb
 
