@@ -78,8 +78,17 @@ UTS_TRUNCATE="cut -b -$UTS_LEN"
   echo \#define LINUX_COMPILE_BY \"`echo $LINUX_COMPILE_BY | $UTS_TRUNCATE`\"
   echo \#define LINUX_COMPILE_HOST \"`echo $LINUX_COMPILE_HOST | $UTS_TRUNCATE`\"
 
-  CC_VERSION=$($CC -v 2>&1 | grep ' version ' | sed 's/[[:space:]]*$//;s/ ([^()]*)//g')
-  LD_VERSION=$($LD -v | head -n1 | sed 's/[[:space:]]*$//;s/ ([^()]*)//g')
+if [ -z "$COMPILER_NAME" ]; then
+   CC_VERSION=$($CC -v 2>&1 | grep ' version ' | sed 's/[[:space:]]*$//;s/ ([^()]*)//g')
+else
+   CC_VERSION="$COMPILER_NAME"
+fi
+
+if [ -z "$LINKER_NAME" ]; then
+   LD_VERSION=$($LD -v | head -n1 | sed 's/[[:space:]]*$//;s/ ([^()]*)//g')
+else
+   LD_VERSION="$LINKER_NAME"
+fi
   printf '#define LINUX_COMPILER "%s"\n' "$CC_VERSION, $LD_VERSION"
 ) > .tmpcompile
 
