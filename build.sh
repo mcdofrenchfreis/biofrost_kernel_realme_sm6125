@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Build Script for Biofrost Kernel
-# Copyright (C) 2022-2024 Mar Yvan D. (xevan)
+# Copyright (C) 2022-2025 Mar Yvan D. (xevan)
 
 # Dependency preparation
 make clean mrproper
@@ -12,7 +12,7 @@ git clone --depth=1 https://github.com/mcdofrenchfreis/AnyKernel3.git -b r5x Any
 # Main Variables
 DATE=$(TZ=Asia/Singapore date +"%a %b %d %r %Z %Y")
 BUILD_START=$(date +"%s")
-TCDIR=/home/biofrost/Development/Compiler/clang-r536225
+TCDIR="/home/biofrost/Development/Compiler/clang-r547379"
 DTBO=out/arch/arm64/boot/dtbo.img
 IMAGE=out/arch/arm64/boot/Image.gz-dtb
 
@@ -26,14 +26,22 @@ export COMMIT_HASH=$(git rev-parse --short HEAD)
 export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 export REPO_URL="https://github.com/mcdofrenchfreis/biofrost_kernel_realme_sm6125"
 
+# Determine BUILD_TYPE based on biofrost-localversion content
+if grep -q "KSU" biofrost-localversion; then
+    export BUILD_TYPE="KSU"
+elif grep -q "OBT" biofrost-localversion; then
+    export BUILD_TYPE="Maintenance"
+else
+    export BUILD_TYPE="Stable"
+fi
+
 # Build Information
 export COMPILER_NAME="$(${TCDIR}/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-export LINKER_NAME="$("${TCDIR}"/bin/ld.lld --version | head -n 1 | sed 's/(compatible with [^)]*)//' | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+export LINKER_NAME="$("${TCDIR}"/bin/ld.lld --version | head -n 1 | cut -d' ' -f1,2)"
 export KBUILD_BUILD_USER="xevan"
 export KBUILD_BUILD_HOST="1108"
 export DEVICE="Realme 5 Series"
 export CODENAME="realme_trinket"
-export BUILD_TYPE="Maintenance"
 export DISTRO=$(source /etc/os-release && echo "${NAME}")
 
 # Telegram Integration Variables
